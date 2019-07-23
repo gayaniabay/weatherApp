@@ -1,1 +1,12 @@
-<p>main works!</p>
+<form [formGroup]="searchCityForm"  (ngSubmit) = "getSelectedCityId">
+    <ng-select [items]="citiesList"
+           bindLabel="name"
+           autofocus
+           bindValue="geonameid"
+           formControlName = "cities"
+           (change)="onChange($event)">
+        <ng-template ng-option-tmp let-item="item">
+            <b>{{item.name}}</b> <span>{{item.subcountry}} {{item.country}}</span>
+        </ng-template>
+</ng-select>
+</form>

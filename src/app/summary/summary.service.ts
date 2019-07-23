@@ -12,8 +12,11 @@ export class SummaryService {
   constructor( private http: HttpClient) { }
 
   getAllCities(){
-    return this.http.get(URL.citiesURL).pipe(
+    return this.http.get(URL.citiesURL, { responseType:"text" } ).pipe(
       map((res: any) => res)
     );
+  }
+  getCurrentWeather(searchURL){
+    return this.http.get(URL.getCurrentWeatherURL+searchURL)
   }
 }

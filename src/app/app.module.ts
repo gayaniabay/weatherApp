@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,6 +18,7 @@ import { SummaryModule } from './summary/summary.module';
   imports: [
     BrowserModule,
     NgSelectModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
