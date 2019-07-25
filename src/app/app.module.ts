@@ -4,16 +4,18 @@ import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { SummaryModule } from './summary/summary.module';
+import { ChangeTemperaturePipe } from './pipe/change-temperature.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ChangeTemperaturePipe
   ],
   imports: [
     BrowserModule,
@@ -23,6 +25,8 @@ import { SummaryModule } from './summary/summary.module';
     ReactiveFormsModule,
     HttpClientModule,
     SummaryModule,
+    NgbModule,
+    NgxPaginationModule,
     AppRoutingModule
   ],
   providers: [],

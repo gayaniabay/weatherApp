@@ -1,4 +1,4 @@
-export class Cities{
+export class City{
     name : string;
     country : string;
     subcountry : string;

@@ -1,12 +1,90 @@
-<form [formGroup]="searchCityForm"  (ngSubmit) = "getSelectedCityId">
-    <ng-select [items]="citiesList"
-           bindLabel="name"
-           autofocus
-           bindValue="geonameid"
-           formControlName = "cities"
-           (change)="onChange($event)">
-        <ng-template ng-option-tmp let-item="item">
-            <b>{{item.name}}</b> <span>{{item.subcountry}} {{item.country}}</span>
-        </ng-template>
-</ng-select>
-</form>
+<div class="weather">
+  <div class="row">
+    <div class="col-xs-12">
+        <form [formGroup]="searchCityForm"  (ngSubmit) = "getSelectedCityId">
+          <div class="d-flex justify-content-end">
+            <ng-select class="custom" [items]="sortedCities"
+                   bindLabel="name"
+                   autofocus
+                   [clearable] = "false"
+                   bindValue="geonameid"
+                   formControlName = "cities"
+                   placeholder = "Enter City"
+                   (change)="onChange($event)">
+                    <ng-template ng-option-tmp let-item="item">
+                        <span class="city">{{item.name}}</span>
+                        <span class="subcountry">{{item.subcountry}}</span>
+                        <span class="country">{{item.country}}</span>
+                    </ng-template>
+            </ng-select>
+          </div>
+        </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+          <div class="card-body" *ngFor="let record of currentWeatherData; index as i">
+              <div class="temperature">
+                  <i class="fas fa-{{record.icon}}"></i>
+              </div>
+              <div class="units-block">
+                  <h1 class="h1">{{record.temp | ChangeTemperaturePipe}}
+                      <span class="units">
+                        <span class="badge">&#8451;</span><span class="vdivider"></span><span class="badge">&#8457;</span>
+                      </span>
+                    </h1>
+              </div>
+              <div class="d-flex justify-content-start summary">
+                    <div>
+                        <span class="value">{{record.humidity}}</span>
+                        <span class="lable">humidity</span>
+                    </div>
+                    <div>
+                        <span class="value">{{record.speed}}</span>
+                        <span class="lable">windspeed</span>
+                    </div>
+              </div>
+              <div class="d-flex justify-content-end summary">
+                      <div *ngIf="units === 'metric' || units === 'imperial'">
+                          <span class="value">{{record.temp_min}}</span>
+                          <span class="badge" *ngIf="units === 'metric'">&#8451;</span>
+                          <span class="badge" *ngIf="units === 'imperial'">&#8457;</span>
+                          <span class="lable">min temp</span>
+                      </div>
+                      <div>
+                          <span class="value">{{record.temp_max}}</span>
+                          <span class="badge" *ngIf="units === 'metric'">&#8451;</span>
+                          <span class="badge" *ngIf="units === 'imperial'">&#8457;</span>
+                          <span class="lable">max temp</span>
+                      </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+        <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Time</th>
+              <th scope="col">Cloud</th>
+              <th scope="col">Temperature</th>
+              <th scope="col">Humidity</th>
+              <th scope="col">WindSpeed</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let record of forecastData | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+              <td>{{record.time}}</td>
+              <td>{{record.clouds}}</td>
+              <td>{{record.temp}}</td>
+              <td>{{record.humidity}}</td>
+              <td>{{record.wind}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+

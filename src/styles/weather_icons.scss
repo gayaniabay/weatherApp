@@ -1,0 +1,103 @@
+.fas{
+    color: $light-grey;
+}
+//clear sky
+.fa-01d{
+    &::before{
+        content: "\f111";
+        color: $accent;
+    }
+}
+.fa-01n{
+    &::before{
+        content: "\f111";
+    }
+}
+//	few clouds
+.fa-02d{
+    &::before{
+        content: "\f6c4";
+        color: $accent;
+    }
+}
+.fa-02n{
+    &::before{
+        content: "\f6c3";
+    }
+}
+//scattered clouds
+.fa-03d{
+    &::before{
+        content: "\f0c2";
+        color: $accent;
+    }
+}
+.fa-03n{
+    &::before{
+        content: "\f0c2";
+    }
+}
+//broken clouds
+.fa-04d{
+    &::after{
+        content: "\f0c2";
+        color: $accent;
+        position: relative;
+        left: -15px;
+        top: -2px;
+        z-index: -1;
+    }
+    &::before{
+        content: "\f0c2";
+        color: $accent;
+    }
+}
+.fa-04n{
+    &::after{
+        content: "\f0c2";
+        color: $accent;
+        position: relative;
+        left: -15px;
+        top: -2px;
+        z-index: -1;
+    }
+    &::before{
+        content: "\f0c2";
+    }
+}
+//shower rain
+.fa-09d{
+    &::before{
+        content: "\f73d";
+        color: $accent;
+    }
+}
+.fa-09n{
+    &::before{
+        content: "\f73d";
+    }
+}
+//rain
+.fa-10d{
+    &::before{
+        content: "\f743";
+        color: $accent;
+    }
+}
+.fa-10n{
+    &::before{
+        content: "\f73c";
+    }
+}
+//thunderstorm
+.fa-11d{
+    &::before{
+        content: "\f743";
+        color: $accent;
+    }
+}
+.fa-11n{
+    &::before{
+        content: "\f73c";
+    }
+}

@@ -1,0 +1,106 @@
+// card
+.weather{
+    margin : 30px 5%;
+    .card{
+        .temperature{
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            font-size: 5rem;
+        }
+        .units-block{
+            margin: 40px 0;
+            text-align: center;
+            .units{
+                position: relative;
+                top: -20px;
+                left: -20px;
+                .badge{
+                    padding: 0 15px 0 15px;
+                    font-weight: 100;
+                    font-size: 0.6em;
+                }
+                .vdivider{
+                    border-left: 2px solid;
+                    height: 30px;
+                    position: absolute;
+                    left: 57%;
+                    margin-left: -7px;
+                    top: 32px;
+                }
+            }
+        }
+        .summary{
+            div{
+                margin : 20px 20px 10px 10px;
+            }
+            .value{
+                font-size: 1.5rem;
+                font-weight: 200;
+            }
+            .badge{
+                top: -8px;
+                position: relative;
+                font-weight: 200;
+            }
+            .lable{
+                text-transform: uppercase;
+                font-size: 0.8rem;
+                padding: 0 5px;
+            }
+        }
+    }
+}
+// ng select
+.custom{
+    width: 60rem;
+    margin: 30px 5%;
+    &:focus,&:active{
+        outline: 0;
+    }
+    .ng-select-container{
+        border-top: 0;
+        border-right: 0;
+        border-left: 0;
+        border-bottom: 2px !important;
+        border-radius: 0;
+        box-shadow: 0 2px 0 rgba(0,0,0,0.06);
+        height: 42px !important;
+    }
+    .ng-input{
+        input{
+            font-size: 2rem !important;
+            font-weight: 100 !important;
+            line-height: 1.6rem !important;
+        }
+    }
+    .ng-value-label{
+        font-size: 2rem !important;
+        font-weight: 100 !important;
+        line-height: 1.6rem !important;
+    }
+    .city{
+        font-size: 1rem;
+        font-weight: 100;
+        padding: 2px 4px;
+    }
+    .subcountry{
+        font-size: 0.8rem;
+        padding: 2px 4px;
+        font-weight: 300;
+    }
+    .country{
+        font-size: 0.8rem; 
+        padding: 2px 4px;
+        font-weight: 400;
+    }
+}
+
+//ngx-pagination
+.ngx-pagination{
+    padding-left: 0;
+    font-size: 0.8rem;
+    .current{
+        background: $light-grey;
+    }
+}
