@@ -1,0 +1,4 @@
+{
+    "main": {"temp": 28, "pressure": 1011, "humidity": 78, "temp_min": 28, "temp_max": 28},
+    "wind": {"speed": 3.1, "deg": 190}
+}
