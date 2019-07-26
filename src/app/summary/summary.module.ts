@@ -4,6 +4,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ChangeTemperaturePipe } from './change-temperature.pipe';
 
 import { MainComponent } from './main/main.component';
 
@@ -11,7 +12,7 @@ import { MainComponent } from './main/main.component';
 
 
 @NgModule({
-  declarations: [MainComponent ],
+  declarations: [MainComponent, ChangeTemperaturePipe ],
   imports: [
     CommonModule,
     NgSelectModule,

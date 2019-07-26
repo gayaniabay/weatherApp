@@ -5,6 +5,7 @@ import { SummaryService } from '../summary.service';
 import { City } from '../../modal/cities';
 import { CurrentWeather } from '../../modal/currentWeather';
 import { Forecast } from '../../modal/forecast';
+import { ChangeTemperaturePipe } from '../change-temperature.pipe'
 
 @Component({
   selector: 'app-main',
@@ -13,13 +14,13 @@ import { Forecast } from '../../modal/forecast';
 })
 export class MainComponent implements OnInit {
 
-  records:any;
+  records: any;
   citiesList: any;
-  searchCityForm : FormGroup;
+  searchCityForm: FormGroup;
   sortedCities = [];
   selectedCityObj = [];
   currentTemp: any;
-  currentTempData : object;
+  currentTempData: object;
   currentWindData: object;
   currentweather: object;
   apiKey = "a96b9faed450f23f316a8aaecd26cf74";
@@ -29,21 +30,23 @@ export class MainComponent implements OnInit {
   collectionSize: any;
   pageSize: number;
   currentWeatherData: any[];
-  key: string = 'name'; //set default
-  reverse: boolean = false;
- 
-  p: number = 1;
-  
- 
+  unitOfMeasure: string = "metric";
+  isActiveMetric: boolean = true;
+  isActiveImp: boolean = false;
 
-  constructor(public summaryService: SummaryService, private formBuilder : FormBuilder ) { }
+  bufferSize = 50;
+  numberOfItemsFromEndBeforeFetchingMore = 10;
+  loading = false;
+  p: number = 1;
+
+
+
+  constructor(public summaryService: SummaryService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.sortedCities = JSON.parse(localStorage.getItem('arrayOfCities'));
     this.initializeForm();
     this.getAllCitiesFn();
-    console.log(this.sortedCities);
-
     this.loadInitialData();
     this.getHourlyForcastFn();
   }
@@ -53,46 +56,57 @@ export class MainComponent implements OnInit {
     this.getHourlyForcastFn();
   }
 
-  initializeForm(){
+  initializeForm() {
     this.searchCityForm = this.formBuilder.group({
-      cities : ["1248991"]
+      cities: ["1248991"]
     })
   }
-  loadInitialData(){
+  loadInitialData() {
     const cityId = 1248991;
     const searchURL = "weather?id=" + cityId + "&units=" + this.units + "&appid=" + this.apiKey;
-    this.summaryService.getCurrentWeather(searchURL).subscribe((data : CurrentWeather) => {
+    this.summaryService.getCurrentWeather(searchURL).subscribe((data: CurrentWeather) => {
 
       this.currentWeatherData = []
       let x = {
-        temp : data.main.temp,
-        humidity : data.main.humidity,
-        temp_min : data.main.temp_min,
-        temp_max : data.main.temp_max,
-        speed : data.wind.speed,
-        icon : data.weather[0].icon
+        temp: data.main.temp,
+        humidity: data.main.humidity,
+        temp_min: data.main.temp_min,
+        temp_max: data.main.temp_max,
+        speed: data.wind.speed,
+        icon: data.weather[0].icon
       }
       this.currentWeatherData.push(x);
     })
   }
+  convertToMat() {
+    this.unitOfMeasure = "metric";
+    this.isActiveImp = false;
+    this.isActiveMetric = true;
+  }
+  convertToImp() {
+    this.unitOfMeasure = "imperial";
+    this.isActiveImp = true;
+    this.isActiveMetric = false;
+  }
+
   getSelectedCityId() {
 
     const searchURL = "weather?id=" + this.cityId + "&units=" + this.units + "&appid=" + this.apiKey;
     console.log(searchURL);
 
-    this.summaryService.getCurrentWeather(searchURL).subscribe((data : CurrentWeather) => {
+    this.summaryService.getCurrentWeather(searchURL).subscribe((data: CurrentWeather) => {
       this.currentWeatherData = []
       let x = {
-        cityId : data.id,
-        temp : data.main.temp,
-        humidity : data.main.humidity,
-        temp_min : data.main.temp_min,
-        temp_max : data.main.temp_max,
-        speed : data.wind.speed,
-        icon : data.weather[0].icon
+        cityId: data.id,
+        temp: data.main.temp,
+        humidity: data.main.humidity,
+        temp_min: data.main.temp_min,
+        temp_max: data.main.temp_max,
+        speed: data.wind.speed,
+        icon: data.weather[0].icon
       }
       this.currentWeatherData.push(x);
-      
+
       let currentTime = Date.now();
       let getData = JSON.parse(localStorage.getItem('selectedCityObj')) || [];
 
@@ -109,17 +123,17 @@ export class MainComponent implements OnInit {
       localStorage.setItem('selectedCityObj', JSON.stringify(getData));
     })
   }
-  getHourlyForcastFn(){
+  getHourlyForcastFn() {
     const searchURL = "forecast?id=" + "1248991" + "&units=" + this.units + "&appid=" + this.apiKey;
-    this.summaryService.getHourlyFocast(searchURL).subscribe((data : Forecast)=> {
+    this.summaryService.getHourlyFocast(searchURL).subscribe((data: Forecast) => {
       this.forecastData;
-      for (let i = 1; i < data.list.length ; i++) {
+      for (let i = 1; i < data.list.length; i++) {
         let x = {
-          time : data.list[i].dt_txt,
-          clouds : data.list[i].clouds.all,
-          temp : data.list[i].main.temp,
-          humidity : data.list[i].main.humidity,
-          wind : data.list[i].wind.speed
+          time: data.list[i].dt_txt,
+          clouds: data.list[i].clouds.all,
+          temp: data.list[i].main.temp,
+          humidity: data.list[i].main.humidity,
+          wind: data.list[i].wind.speed
         }
         this.forecastData.push(x)
       }
@@ -146,7 +160,7 @@ export class MainComponent implements OnInit {
       headerArray.push(headers[j]);
     }
     return headerArray;
-  } 
+  }
   getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
     this.citiesList = [];
     for (let i = 1; i < csvRecordsArray.length; i++) {
@@ -166,7 +180,7 @@ export class MainComponent implements OnInit {
         this.citiesList.push(x);
       }
     }
-    this.citiesList.sort(function (a : any, b : any) {
+    this.citiesList.sort(function (a: any, b: any) {
       if (a.name > b.name) return 1;
       if (a.name < b.name) return -1;
       return 0;
@@ -174,5 +188,29 @@ export class MainComponent implements OnInit {
     localStorage.setItem('arrayOfCities', JSON.stringify(this.citiesList));
     //return this.citiesList;
     console.log(this.citiesList);
-  }  
+  }
+  onScrollToEnd() {
+    this.fetchMore();
+  }
+
+  onScroll({ end }) {
+    if (this.loading || this.sortedCities.length) {
+      return;
+    }
+
+    if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.sortedCities.length) {
+      this.fetchMore();
+    }
+  }
+
+  private fetchMore() {
+    const len = this.sortedCities.length;
+    const more = this.sortedCities.slice(len, this.bufferSize + len);
+    this.loading = true;
+    // using timeout here to simulate backend API delay
+    setTimeout(() => {
+      this.loading = false;
+      this.sortedCities = this.sortedCities.concat(more);
+    }, 200)
+  }
 }

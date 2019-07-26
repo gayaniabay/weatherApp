@@ -92,12 +92,26 @@
 //thunderstorm
 .fa-11d{
     &::before{
-        content: "\f743";
+        content: "\f0e7";
         color: $accent;
     }
 }
 .fa-11n{
     &::before{
-        content: "\f73c";
+        content: "\f0e7";
+    }
+}
+// snow
+.fa-13d, .fa-13n{
+    &::before{
+        content: "\f2dc";
+        color: $accent;
+    }
+}
+//mist
+.fa-50d, .fa-50n{
+    &::before{
+        content: "\f2dc";
+        color: $accent;
     }
 }

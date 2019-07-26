@@ -10,12 +10,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { SummaryModule } from './summary/summary.module';
-import { ChangeTemperaturePipe } from './pipe/change-temperature.pipe';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChangeTemperaturePipe
   ],
   imports: [
     BrowserModule,
